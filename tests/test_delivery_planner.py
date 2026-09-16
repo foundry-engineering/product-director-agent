@@ -62,7 +62,7 @@ def test_regulated_work_can_be_planned_when_jurisdiction_is_explicit() -> None:
         _brief(DeliverableKind.ACCOUNTING_AUTOMATION, jurisdictions=("AT",))
     )
     assert not plan.blocked_reasons
-    assert any("jurisdiction" not in question.lower() for question in plan.open_questions) or not plan.open_questions
+    assert not any(question.startswith("Which jurisdictions apply") for question in plan.open_questions)
 
 
 def test_pitch_deck_requires_evidence_backed_market_and_financial_inputs() -> None:
