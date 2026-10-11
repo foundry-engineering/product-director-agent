@@ -249,4 +249,11 @@ def build_delivery_plan(brief: ProductBrief) -> DeliveryPlan:
         "blocked_reasons": blocked,
     }
     plan_id = "plan-" + hashlib.sha256(_canonical_json(material).encode("utf-8")).hexdigest()[:32]
-    return DeliveryPlan(plan_id=plan_id, **material)
+    return DeliveryPlan(
+        plan_id=plan_id,
+        brief_id=brief.brief_id,
+        packages=tuple(packages),
+        open_questions=questions,
+        assumptions=(),
+        blocked_reasons=tuple(blocked),
+    )
