@@ -4,11 +4,15 @@ on:
   push:
     branches: [main]
 jobs:
-  ci:
+  test:
+    name: test
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
       - uses: astral-sh/setup-uv@v3
       - run: uv sync --extra dev --locked
       - run: uv run python -m compileall -q src tests
