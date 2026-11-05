@@ -2,12 +2,19 @@ name: ci
 on:
   pull_request:
   push:
-    branches: [main]
+    branches: [main, feat/product-director-enterprise-v1]
 jobs:
-  ci:
-    runs-on: ubuntu-latest
+  test:
+    name: test
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
       - uses: astral-sh/setup-uv@v3
       - run: uv sync --extra dev --locked
       - run: uv run python -m compileall -q src tests
